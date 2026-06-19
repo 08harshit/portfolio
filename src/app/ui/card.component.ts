@@ -8,8 +8,8 @@ import { CommonModule } from '@angular/common';
   template: `
     <div
       [ngClass]="[
-        'rounded-xl border border-border bg-surface text-foreground shadow-sm transition-all duration-300',
-        hoverEffect ? 'hover:border-border/80 hover:shadow-md hover:-translate-y-1' : '',
+        'rounded-2xl border border-border bg-surface text-foreground shadow-sm transition-all duration-500',
+        hoverEffect ? 'hover:border-foreground/20 hover:shadow-2xl hover:shadow-emerald-900/10 hover:-translate-y-1' : '',
         customClass
       ]"
     >
@@ -20,7 +20,7 @@ import { CommonModule } from '@angular/common';
       </div>
       
       <!-- Card Content -->
-      <div [ngClass]="['p-6 pt-0', contentClass]">
+      <div [ngClass]="['p-6', title || subtitle ? 'pt-0' : '', contentClass]">
         <ng-content></ng-content>
       </div>
       
