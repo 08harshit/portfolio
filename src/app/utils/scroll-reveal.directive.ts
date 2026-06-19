@@ -20,8 +20,11 @@ export class ScrollRevealDirective implements OnInit, OnDestroy {
   }
 
   private setupInitialStyles() {
-    this.renderer.setStyle(this.el.nativeElement, 'opacity', '0');
+    // Apply cubic-bezier for a more premium, snappy feel
     this.renderer.setStyle(this.el.nativeElement, 'transition', `all ${this.duration}ms cubic-bezier(0.16, 1, 0.3, 1) ${this.delay}ms`);
+    
+    // Initial state
+    this.renderer.setStyle(this.el.nativeElement, 'opacity', '0');
     
     let transform = '';
     switch (this.direction) {
