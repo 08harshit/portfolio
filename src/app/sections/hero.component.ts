@@ -20,8 +20,8 @@ import { ScrollRevealDirective } from '../utils/scroll-reveal.directive';
           <span class="text-sm font-mono tracking-wide text-foreground/80">AVAILABLE FOR NEW OPPORTUNITIES</span>
         </div>
 
-        <h1 appScrollReveal [delay]="200" class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-transparent bg-clip-text bg-gradient-to-r from-foreground via-foreground/90 to-foreground/60 leading-[1.1] pb-2">
-          Hi, I'm Harshit. <br />
+        <h1 appScrollReveal [delay]="200" class="text-5xl sm:text-6xl lg:text-7xl font-bold tracking-tight text-foreground leading-[1.1] pb-2">
+          Hi, I'm <span class="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-emerald-600">Harshit</span>. <br />
           <span class="text-foreground/50">I build scalable backend systems.</span>
         </h1>
 
