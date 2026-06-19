@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink } from '@angular/router';
+import { inject } from '@vercel/analytics';
 
 @Component({
   selector: 'app-root',
@@ -35,6 +36,10 @@ import { RouterOutlet, RouterLink } from '@angular/router';
     </div>
   `
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'portfolio';
+
+  ngOnInit() {
+    inject();
+  }
 }
