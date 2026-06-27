@@ -118,35 +118,38 @@ import { ScrollRevealDirective } from '../utils/scroll-reveal.directive';
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center" appScrollReveal delay="100">
           <div class="space-y-6">
             <div class="flex gap-2">
-              <app-badge variant="outline">Security</app-badge>
-              <app-badge variant="outline">JWT</app-badge>
-              <app-badge variant="outline">NestJS</app-badge>
+              <app-badge variant="outline">Kafka</app-badge>
+              <app-badge variant="outline">BigQuery</app-badge>
+              <app-badge variant="outline">Event-Driven</app-badge>
             </div>
-            <h3 class="text-3xl font-bold tracking-tight">Authentication & Security Architecture</h3>
+            <h3 class="text-3xl font-bold tracking-tight">Real-Time BigQuery Audit Pipeline</h3>
             
             <div class="space-y-4 text-foreground/80">
               <div>
-                <h4 class="font-semibold text-foreground">The Solution</h4>
-                <p>Designed and implemented a robust, scalable security architecture for enterprise clients. Features included JWT authentication, refresh token rotation, token reuse detection, and role-based authorization guards.</p>
+                <h4 class="font-semibold text-foreground">The Problem</h4>
+                <p>Enterprise clients required a reliable, queryable audit trail of every financial and specification change across a 30-module microservice platform without degrading API performance.</p>
               </div>
               <div>
-                <h4 class="font-semibold text-foreground">Infrastructure</h4>
-                <p>Utilized Redis for fast OTP storage and distributed rate limiting to prevent brute-force attacks across clustered instances.</p>
+                <h4 class="font-semibold text-foreground">The Solution</h4>
+                <p>Engineered an event-driven data pipeline. Implemented PostgreSQL triggers (pg_notify) to capture database-level changes, streamed them through Apache Kafka with dead-letter queue resilience, and batch-loaded processed records into Google BigQuery.</p>
               </div>
             </div>
           </div>
           
           <div class="bg-surface border border-border rounded-xl p-8 relative overflow-hidden group">
             <div class="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-            <h4 class="text-xs font-mono text-foreground/50 mb-6 tracking-wider">AUTH FLOW</h4>
+            <h4 class="text-xs font-mono text-foreground/50 mb-6 tracking-wider">EVENT PIPELINE</h4>
             <div class="flex flex-col items-center space-y-4 font-mono text-sm">
-              <div class="w-48 py-3 bg-background border border-border rounded text-center shadow-sm">Client Request</div>
-              <div class="h-6 border-l border-dashed border-border/50 flex items-center justify-center relative"><span class="absolute bg-background px-2 text-[10px] text-foreground/50">Access Token</span></div>
-              <div class="w-48 py-3 bg-surface-hover border border-border rounded text-center shadow-sm">NestJS API Guard</div>
-              <div class="flex w-48 justify-between relative mt-4">
-                <div class="w-[45%] py-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded text-center shadow-sm text-xs">Redis (Rate Limit)</div>
-                <div class="w-[45%] py-3 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded text-center shadow-sm text-xs">PostgreSQL (User)</div>
+              <div class="w-48 py-3 bg-background border border-border rounded text-center shadow-sm">PostgreSQL (pg_notify)</div>
+              <div class="h-6 border-l border-dashed border-border/50 flex items-center justify-center relative"><span class="absolute bg-background px-2 text-[10px] text-foreground/50">Change Event</span></div>
+              <div class="w-48 py-3 bg-orange-500/10 border border-orange-500/20 text-orange-400 rounded text-center shadow-sm">Apache Kafka</div>
+              <div class="h-6 border-l border-dashed border-border/50"></div>
+              <div class="flex w-48 justify-between relative">
+                <div class="w-[45%] py-3 bg-surface-hover border border-border rounded text-center shadow-sm text-xs">Processor</div>
+                <div class="w-[45%] py-3 bg-red-500/10 border border-red-500/20 text-red-400 rounded text-center shadow-sm text-xs">DLQ</div>
               </div>
+              <div class="h-6 border-l border-dashed border-border/50"></div>
+              <div class="w-48 py-3 bg-blue-500/10 border border-blue-500/20 text-blue-400 rounded text-center shadow-sm">Google BigQuery</div>
             </div>
           </div>
         </div>
