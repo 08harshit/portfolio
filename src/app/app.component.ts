@@ -2,18 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet, RouterLink } from '@angular/router';
 import { inject } from '@vercel/analytics';
-import { CursorComponent } from './ui/cursor.component';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, RouterLink, CursorComponent],
+  imports: [CommonModule, RouterOutlet, RouterLink],
   template: `
-    <div class="min-h-screen bg-background text-foreground selection:bg-surface-hover selection:text-white cursor-none relative">
+    <div class="min-h-screen bg-background text-foreground selection:bg-surface-hover selection:text-white relative">
       <!-- Matte Noise Overlay -->
       <div class="pointer-events-none fixed inset-0 z-50 h-full w-full opacity-20 mix-blend-overlay" style="background-image: url(&quot;data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E&quot;);"></div>
-
-      <app-cursor></app-cursor>
       
       <!-- Minimal Sticky Navbar -->
       <header class="fixed top-0 left-0 right-0 z-50 bg-background/80 backdrop-blur-md border-b border-border/50">
