@@ -53,7 +53,7 @@ import { BadgeComponent } from '../ui/badge.component';
 
                 <div class="flex items-center justify-between gap-3">
                   <span class="text-sm text-foreground/80">Real estate platform</span>
-                  <app-badge variant="outline" customClass="text-amber-400 border-amber-400/30 shrink-0">In Progress</app-badge>
+                  <app-badge variant="outline" customClass="text-emerald-400 border-emerald-400/30 shrink-0">Shipped</app-badge>
                 </div>
 
                 <div class="flex items-center justify-between gap-3">
