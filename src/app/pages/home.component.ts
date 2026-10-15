@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { HeroComponent } from '../sections/hero.component';
 import { ImpactComponent } from '../sections/impact.component';
+import { ProjectsComponent } from '../sections/projects.component';
 import { AboutComponent } from '../sections/about.component';
 import { CaseStudiesComponent } from '../sections/case-studies.component';
 import { ExperienceComponent } from '../sections/experience.component';
@@ -15,9 +16,10 @@ import { ContactComponent } from '../sections/contact.component';
   selector: 'app-home',
   standalone: true,
   imports: [
-    CommonModule, 
+    CommonModule,
     HeroComponent,
     ImpactComponent,
+    ProjectsComponent,
     AboutComponent,
     CaseStudiesComponent,
     ExperienceComponent,
@@ -27,7 +29,9 @@ import { ContactComponent } from '../sections/contact.component';
     ContactComponent
   ],
   template: `
-    <main class="overflow-hidden">
+    <!-- overflow-x-clip, not overflow-hidden: the latter creates a scroll
+         container and silently breaks position:sticky in the pinned case study. -->
+    <main class="overflow-x-clip">
       <app-hero id="top"></app-hero>
       
       <div class="relative">
@@ -36,6 +40,7 @@ import { ContactComponent } from '../sections/contact.component';
         
         <div class="relative z-10">
           <app-impact></app-impact>
+          <app-projects id="projects"></app-projects>
           <app-about id="about"></app-about>
           <app-case-studies id="work"></app-case-studies>
           <app-experience id="experience"></app-experience>
