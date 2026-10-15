@@ -116,9 +116,14 @@ interface FeaturedProject {
               <app-button variant="outline" size="sm" [disabled]="!project.githubUrl" customClass="opacity-60">
                 GitHub &rarr;
               </app-button>
-              <app-button variant="outline" size="sm" [disabled]="!project.liveUrl" customClass="opacity-60">
-                Live demo &rarr;
-              </app-button>
+              <a *ngIf="project.liveUrl; else liveDisabled" [href]="project.liveUrl" target="_blank" rel="noopener noreferrer">
+                <app-button variant="outline" size="sm">Live demo &rarr;</app-button>
+              </a>
+              <ng-template #liveDisabled>
+                <app-button variant="outline" size="sm" [disabled]="true" customClass="opacity-60">
+                  Live demo &rarr;
+                </app-button>
+              </ng-template>
             </div>
           </div>
         </app-card>
@@ -156,7 +161,7 @@ export class ProjectsComponent {
         'GitHub Actions: every PR runs lint/typecheck/tests; deploys authenticate via GitHub OIDC federation and roll out through AWS SSM send-command — no long-lived credentials, no bastion.'
       ],
       githubUrl: undefined,
-      liveUrl: undefined,
+      liveUrl: 'https://www.masteracres.com',
       expanded: false
     }
   ];
