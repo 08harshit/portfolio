@@ -27,7 +27,9 @@ import { ContactComponent } from '../sections/contact.component';
     ContactComponent
   ],
   template: `
-    <main class="overflow-hidden">
+    <!-- overflow-x-clip, not overflow-hidden: the latter creates a scroll
+         container and silently breaks position:sticky in the pinned case study. -->
+    <main class="overflow-x-clip">
       <app-hero id="top"></app-hero>
       
       <div class="relative">

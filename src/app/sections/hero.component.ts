@@ -4,14 +4,28 @@ import { RouterLink } from '@angular/router';
 import { ButtonComponent } from '../ui/button.component';
 import { BadgeComponent } from '../ui/badge.component';
 import { ScrollRevealDirective } from '../utils/scroll-reveal.directive';
+import { AmbientFieldComponent } from '../gl/ambient-field.component';
 
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [CommonModule, RouterLink, ButtonComponent, BadgeComponent, ScrollRevealDirective],
+  imports: [
+    CommonModule,
+    RouterLink,
+    ButtonComponent,
+    BadgeComponent,
+    ScrollRevealDirective,
+    AmbientFieldComponent
+  ],
   template: `
-    <section class="min-h-[90vh] flex flex-col justify-center py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-      <div class="space-y-8 max-w-4xl">
+    <section class="relative min-h-[90vh] flex flex-col justify-center py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+      <!-- z-0, not -z-10: a negative z-index would paint the canvas beneath the
+           ancestor's opaque background and hide it entirely. -->
+      <app-ambient-field
+        class="pointer-events-none absolute inset-0 z-0 [mask-image:radial-gradient(ellipse_60%_75%_at_78%_50%,black_0%,transparent_72%)]"
+      ></app-ambient-field>
+
+      <div class="relative z-10 space-y-8 max-w-4xl">
         <div appScrollReveal [delay]="100" class="inline-flex items-center space-x-2">
           <span class="relative flex h-3 w-3">
             <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-500 opacity-75"></span>
