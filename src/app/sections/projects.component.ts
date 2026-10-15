@@ -11,6 +11,7 @@ interface FeaturedProject {
   tagline: string;
   stack: string[];
   pitch: string;
+  features: string[];
   factBadges: string[];
   highlights: string[];
   infraNotes: string[];
@@ -54,6 +55,14 @@ interface FeaturedProject {
               <h3 class="text-3xl font-bold tracking-tight">{{ project.title }}</h3>
               <p class="text-foreground/60 font-mono text-sm">{{ project.tagline }}</p>
               <p class="text-lg text-foreground/75 leading-relaxed max-w-3xl">{{ project.pitch }}</p>
+            </div>
+
+            <!-- What it does (plain-language features) -->
+            <div>
+              <h4 class="text-xs font-mono text-foreground/50 mb-3 tracking-wider">WHAT IT DOES</h4>
+              <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-foreground/80 text-sm list-disc list-inside">
+                <li *ngFor="let feature of project.features">{{ feature }}</li>
+              </ul>
             </div>
 
             <!-- Architecture diagram -->
@@ -135,13 +144,24 @@ export class ProjectsComponent {
   projects: (FeaturedProject & { expanded?: boolean })[] = [
     {
       title: 'Master Acres — Real Estate Marketplace Platform',
-      tagline: 'Built & deployed solo: backend, infrastructure, and CI/CD, end to end.',
+      tagline: 'Built & deployed end-to-end: backend, infrastructure, and CI/CD.',
       stack: ['NestJS', 'PostgreSQL', 'Next.js', 'React Native', 'AWS', 'Docker'],
       pitch:
         'A production two-sided property marketplace connecting buyers, vendors, and admins across web, mobile, and an internal back-office. Buyers discover listings, book site visits, and negotiate offers; vendors manage KYC, subscriptions, and paid visibility; admins moderate content with full audit logging.',
+      features: [
+        'Property & project listings with search and discovery ranking',
+        'Short-video "reels" feed for property content',
+        'Site-visit booking with OTP-verified check-in',
+        'Buyer–vendor offer negotiation with automatic expiry',
+        'Paid vendor verification, subscription plans, and an in-app credit system',
+        'Vendor KYC and bank-account verification for payouts',
+        'In-app and push notifications',
+        'Admin back-office with full audit logging of moderation actions',
+        'Blog/news content for SEO and buyer education'
+      ],
       factBadges: [
         '4 apps, 1 monorepo',
-        'Solo-built, end-to-end',
+        'Built & deployed end-to-end',
         'Zero standing cloud credentials',
         'OIDC CI/CD — no SSH, no static keys'
       ],
