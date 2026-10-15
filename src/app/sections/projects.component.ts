@@ -35,7 +35,7 @@ interface FeaturedProject {
       <app-section-heading
         appScrollReveal
         title="Featured Projects"
-        subtitle="Complete products designed, built, and deployed end-to-end — not just the code, but the architecture and infrastructure behind it."
+        subtitle="Production platforms where I owned the backend architecture, infrastructure, and deployment pipeline end-to-end."
         align="center">
       </app-section-heading>
 
@@ -59,7 +59,7 @@ interface FeaturedProject {
 
             <!-- What it does (plain-language features) -->
             <div>
-              <h4 class="text-xs font-mono text-foreground/50 mb-3 tracking-wider">WHAT IT DOES</h4>
+              <h4 class="text-xs font-mono text-foreground/50 mb-3 tracking-wider">PLATFORM CAPABILITIES (POWERED BY THIS BACKEND)</h4>
               <ul class="grid grid-cols-1 sm:grid-cols-2 gap-x-6 gap-y-2 text-foreground/80 text-sm list-disc list-inside">
                 <li *ngFor="let feature of project.features">{{ feature }}</li>
               </ul>
@@ -67,21 +67,18 @@ interface FeaturedProject {
 
             <!-- Architecture diagram -->
             <div class="bg-surface-hover/50 border border-border rounded-xl p-6 sm:p-8">
-              <h4 class="text-xs font-mono text-foreground/50 mb-6 tracking-wider">MONOREPO ARCHITECTURE</h4>
+              <h4 class="text-xs font-mono text-foreground/50 mb-6 tracking-wider">BACKEND &amp; INFRASTRUCTURE</h4>
               <div class="flex flex-col items-center gap-4">
-                <div class="flex flex-wrap justify-center gap-3 font-mono text-sm">
-                  <div class="px-4 py-2 bg-background border border-border rounded text-center shadow-sm">api (NestJS)</div>
-                  <div class="px-4 py-2 bg-background border border-border rounded text-center shadow-sm">website (Next.js)</div>
-                  <div class="px-4 py-2 bg-background border border-border rounded text-center shadow-sm">admin (Vite SPA)</div>
-                  <div class="px-4 py-2 bg-background border border-border rounded text-center shadow-sm">mobile (Expo)</div>
+                <div class="px-6 py-2 bg-background border border-border rounded text-center shadow-sm font-mono text-sm">
+                  api (NestJS) &middot; ~25 domain modules
                 </div>
                 <div class="h-6 border-l border-dashed border-border/50"></div>
                 <div class="px-6 py-2 bg-surface-hover border border-border rounded text-center shadow-sm font-mono text-sm">
-                  packages/ (shared types, constants, utils)
+                  PostgreSQL &middot; Redis &middot; S3 presigned uploads &middot; Lambda image pipeline
                 </div>
                 <div class="h-6 border-l border-dashed border-border/50"></div>
                 <div class="px-6 py-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded text-center shadow-sm font-mono text-sm">
-                  EC2 + Docker Compose + Caddy &middot; S3/CloudFront &middot; Lambda
+                  EC2 + Docker Compose + Caddy &middot; S3/CloudFront &middot; CI/CD via GitHub Actions
                 </div>
               </div>
             </div>
@@ -144,10 +141,10 @@ export class ProjectsComponent {
   projects: (FeaturedProject & { expanded?: boolean })[] = [
     {
       title: 'Master Acres — Real Estate Marketplace Platform',
-      tagline: 'Built & deployed end-to-end: backend, infrastructure, and CI/CD.',
-      stack: ['NestJS', 'PostgreSQL', 'Next.js', 'React Native', 'AWS', 'Docker'],
+      tagline: 'Backend, infrastructure, and CI/CD for a production marketplace platform.',
+      stack: ['NestJS', 'PostgreSQL', 'Redis', 'AWS', 'Docker'],
       pitch:
-        'A production two-sided property marketplace connecting buyers, vendors, and admins across web, mobile, and an internal back-office. Buyers discover listings, book site visits, and negotiate offers; vendors manage KYC, subscriptions, and paid visibility; admins moderate content with full audit logging.',
+        'The backend and infrastructure for a production two-sided property marketplace connecting buyers, vendors, and admins. Buyers discover listings, book site visits, and negotiate offers; vendors manage KYC, subscriptions, and paid visibility; admins moderate content with full audit logging — all powered by the API, database, and cloud infrastructure built here.',
       features: [
         'Property & project listings with search and discovery ranking',
         'Short-video "reels" feed for property content',
@@ -160,13 +157,14 @@ export class ProjectsComponent {
         'Blog/news content for SEO and buyer education'
       ],
       factBadges: [
-        '4 apps, 1 monorepo',
-        'Built & deployed end-to-end',
+        '~25 backend domain modules',
+        'Backend, infra & CI/CD end-to-end',
         'Zero standing cloud credentials',
         'OIDC CI/CD — no SSH, no static keys'
       ],
       highlights: [
-        'Contract-first monorepo: a shared types package turns a backend DTO change into a compile error on the frontend/mobile side, not a runtime bug after deploy.',
+        'Layered API discipline: Entity → Repository → Service → Controller, with ~25 isolated, independently testable domain modules covering auth, listings, vendors, visits, offers, billing, and admin.',
+        'Contract-first shared types package — a backend DTO change surfaces as a compile error for any client consuming the API, not a runtime bug after deploy.',
         'JWT auth with OTP (SMS + email) and Google OAuth; revocable refresh tokens so a role change or suspension invalidates sessions immediately.',
         'Razorpay payments behind a pluggable provider interface, with per-surface webhook secrets verified via HMAC over the raw request body.',
         'Direct-to-S3 presigned uploads keep the API stateless; an event-driven Lambda generates WebP image variants and ffmpeg extracts video poster frames.',
@@ -174,11 +172,11 @@ export class ProjectsComponent {
         'Safety defaults baked into the code: local-storage and manual-payment providers refuse to start in production mode.'
       ],
       infraNotes: [
-        'Single EC2 instance running Docker Compose (API, website, Postgres, Caddy), each service in an isolated network — the public proxy has no path to the database.',
+        'Single EC2 instance running Docker Compose (API, Postgres, Caddy, plus the other client containers), each service in an isolated network — the public proxy has no path to the database.',
         'Caddy handles automatic HTTPS in place of an ALB + ACM setup — a documented ~$20/month saving with a noted upgrade path.',
         'Containerized PostgreSQL rather than RDS at current scale, with a nightly pg_dump backup sidecar uploading to S3 via IAM role (no AWS keys in any container).',
-        'Admin SPA deployed to S3 + CloudFront with cache-aware two-pass uploads and targeted invalidation.',
-        'GitHub Actions: every PR runs lint/typecheck/tests; deploys authenticate via GitHub OIDC federation and roll out through AWS SSM send-command — no long-lived credentials, no bastion.'
+        'Media delivery via S3 + CloudFront, fed by the Lambda image-variant pipeline, with cache-aware uploads and targeted invalidation.',
+        'GitHub Actions: every PR runs lint/typecheck/tests; API deploys authenticate via GitHub OIDC federation and roll out through AWS SSM send-command — no long-lived credentials, no bastion.'
       ],
       githubUrl: undefined,
       liveUrl: 'https://www.masteracres.com',
