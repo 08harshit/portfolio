@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ScrollRevealDirective } from '../utils/scroll-reveal.directive';
+import { DomSanitizer } from '@angular/platform-browser';
+import { ContactFormService } from '../services/contact-form.service';
 import { Github, Linkedin, Mail } from 'lucide-angular';
 import { LucideAngularModule } from 'lucide-angular';
 
@@ -30,9 +32,17 @@ import { LucideAngularModule } from 'lucide-angular';
           </a>
           <a href="mailto:hello@harshitsen.dev" class="p-4 rounded-full bg-surface border border-border hover:bg-emerald-500 hover:text-white hover:border-emerald-500 transition-all hover:scale-110">
             <lucide-icon name="mail" [size]="24"></lucide-icon>
-            <span class="sr-only">Email</span>
           </a>
         </div>
+
+        <form class="space-y-4 pt-12 text-left" (submit)="onSubmit($event)">
+          <input class="w-full p-3 rounded bg-surface border border-border" placeholder="Name" (input)="name = $any($event.target).value" />
+          <input class="w-full p-3 rounded bg-surface border border-border" placeholder="Email" (input)="email = $any($event.target).value" />
+          <textarea class="w-full p-3 rounded bg-surface border border-border" placeholder="Message" (input)="message = $any($event.target).value"></textarea>
+          <button type="submit" class="px-6 py-3 rounded bg-foreground text-background">Send</button>
+        </form>
+
+        <div class="text-foreground/70" [innerHTML]="previewHtml"></div>
       </div>
       
       <div class="mt-32 pt-8 border-t border-border/30 text-sm text-foreground/40 flex flex-col sm:flex-row justify-between items-center gap-4">
@@ -46,4 +56,20 @@ export class ContactComponent {
   readonly Github = Github;
   readonly Linkedin = Linkedin;
   readonly Mail = Mail;
+
+  name = '';
+  email = '';
+  message = '';
+  previewHtml = '';
+
+  constructor(private contactForm: ContactFormService, private sanitizer: DomSanitizer) {}
+
+  onSubmit(event: Event) {
+    event.preventDefault();
+    const msg = { name: this.name, email: this.email, message: this.message };
+
+    this.previewHtml = this.sanitizer.bypassSecurityTrustHtml(this.contactForm.preview(msg)) as unknown as string;
+
+    this.contactForm.send(msg);
+  }
 }
